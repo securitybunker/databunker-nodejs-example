@@ -1,0 +1,35 @@
+{
+  "name": "hello-nodejs-passport-js-magic-link-databunker",
+  "version": "1.0.0",
+  "description": "Hello world build with passport.js, magic.link, and databunker.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/securitybunker/hello-nodejs-passport-js-magic-link-databunker.git"
+  },
+  "keywords": [
+    "passport.js",
+    "magic.link",
+    "databunker"
+  ],
+  "author": "Yuli Stremovsky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/securitybunker/hello-nodejs-passport-js-magic-link-databunker/issues"
+  },
+  "homepage": "https://github.com/securitybunker/hello-nodejs-passport-js-magic-link-databunker#readme",
+  "dependencies": {
+    "@databunker/session-store": "^1.0.2",
+    "@databunker/store": "^1.0.0",
+    "cookie-parser": "^1.4.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "morgan": "^1.10.0",
+    "passport": "^0.4.1",
+    "passport-magic": "^1.0.0"
+  }
+}
