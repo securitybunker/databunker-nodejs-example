@@ -17,6 +17,7 @@
             <input type="email" name="email" required="required" placeholder="Enter your email" />
             <button type="submit">Send</button>
           </form>
+          <a href="/user/register">Register</a>
         `;
         document.getElementById("app").innerHTML = html;
       }
@@ -28,6 +29,7 @@
             <input type="email" name="email" required="required" placeholder="Enter your email" />
             <button type="submit">Send</button>
           </form>
+          <a href="/user/register">Register</a>
         `;
         /* Get user data including email & apple count */
         let res = await fetch(`/user/me`);

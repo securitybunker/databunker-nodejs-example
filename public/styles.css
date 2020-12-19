@@ -10,9 +10,12 @@ body {
   align-self: center;
   justify-self: center;
   background-color: #eee;
-  text-align: center;
-  width: 300px;
+  width: 400px;
   padding: 27px 18px;
+}
+
+label {
+  font-weight: bold;
 }
 
 h1 {
@@ -23,9 +26,18 @@ h1 {
 
 input,
 button {
+  cursor: pointer;
+  width: 100%;
   padding: 9px;
   font-size: 18px;
   margin-bottom: 9px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
 }
 
 #apple-count {
