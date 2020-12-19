@@ -8,6 +8,18 @@
     <script>
       const magic = new Magic("<%= MAGIC_PUBLISHABLE_KEY %>");
       const serverUrl = window.location.href;
+      const renderError = async (err) => {
+        /* Show login form if user is not logged in */
+        let html = `
+          <h1>Please sign up or login</h1>
+          <span style="color:red;">${err}</span>
+          <form onsubmit="handleLogin(event)">
+            <input type="email" name="email" required="required" placeholder="Enter your email" />
+            <button type="submit">Send</button>
+          </form>
+        `;
+        document.getElementById("app").innerHTML = html;
+      }
       const render = async () => {
         /* Show login form if user is not logged in */
         let html = `
@@ -40,7 +52,7 @@
         if (email) {
           /* One-liner login 🤯 */
           const didToken = await magic.auth.loginWithMagicLink({ email });
-          await fetch(`/user/login`, {
+          const resp = await fetch(`/user/login`, {
             headers: new Headers({
               Authorization: "Bearer " + didToken
             }),
@@ -48,7 +60,12 @@
             credentials: "same-origin",
             method: "POST"
           });
-          render();
+          if (resp.status == 401) {
+              const txt = await resp.text();
+              renderError(txt);
+          } else {
+              render();
+          }
         }
       };
 

@@ -22,9 +22,8 @@ const strategy = new MagicStrategy(async function(user, done) {
   if (!existingUser.data) {
     // do not automatically register users here
     // return signup(user, userMetadata, done);
-    return done(null, false, {
-      message: `User record was not found. You need to register first.`
-    });
+    await magic.users.logoutByIssuer(user.issuer);
+    return done('User record was not found. You need to register first.', false);
   } else {
     /* Login user if otherwise */
     return login(user, existingUser, done);
@@ -54,9 +53,7 @@ const signup = async (user, userMetadata, done) => {
 const login = async (user, existingUser, done) => {
   /* Replay attack protection (https://go.magic.link/replay-attack) */
   if (existingUser.data.lastLoginAt && user.claim.iat <= existingUser.data.lastLoginAt) {
-    return done(null, false, {
-      message: `Replay attack detected for user ${user.issuer}}.`
-    });
+    return done(`Replay attack detected for user ${user.issuer}}.`, false);
   }
   await databunker.users.set("token", existingUser.token,
     { lastLoginAt: user.claim.iat }
@@ -117,16 +114,38 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+    //console.log("/login", req);
     res.render("login", { title: "Magic Apple Store 🍎", MAGIC_PUBLISHABLE_KEY });
 });
 
 /* Attach middleware to login endpoint */
-router.post("/login", passport.authenticate("magic"), (req, res) => {
+/*
+router.post("/login", passport.authenticate("magic") (req, res) => {
   if (req.user) {
       res.status(200).end('User is logged in.');
   } else {
+     console.log("req.session", req.session);
      return res.status(401).end('Could not log user in.');
   }
+});
+*/
+
+router.post('/login', function(req,res,next){
+  passport.authenticate('magic', function(err, user) {
+    if (err) {
+      // return next(err);
+      return res.status(401).end(err);
+    }
+    if (!user) {
+      return res.status(401).end('user not found');
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      res.status(200).end('User is logged in.');
+    });
+  }) (req, res, next);
 });
 
 /* 4️⃣ Implement Session Behavior */
