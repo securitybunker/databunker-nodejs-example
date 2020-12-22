@@ -24,8 +24,7 @@ h1 {
   font-size: 18px;
 }
 
-input,
-button {
+input[type=text], button {
   cursor: pointer;
   width: 100%;
   padding: 9px;

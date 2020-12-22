@@ -65,52 +65,80 @@ const login = async (user, existingUser, done) => {
   return done(null, returnUser);
 };
 
-router.get('/register', (req, res) => {
-    let errors = [];
-    res.render('register', {errors, name:'', email: '', company: ''})
+async function loadSignupAgreements() {
+  const allAgreements = await databunker.agreements.rawlist();
+  let agreements = [];
+  if (allAgreements.status == "ok") {
+    for (const idx in allAgreements.rows) {
+      const r = allAgreements.rows[idx];
+      if (r.module == 'signup-page' && r.basistype == "consent") {
+        agreements.push(r);
+      }
+    }
+  }
+  return agreements;
+}
+
+router.get('/register', async (req, res) => {
+  let agreements = await loadSignupAgreements();
+  let errors = [];
+  res.render('register', {errors, agreements, name:'', email: '', company: ''})
 });
 
 router.post('/register', async (req, res) => {
-    let errors = [];
-    if (!req.body.name) {
-        errors.push({ text: 'Please Enter Name' });
+  let agreements = await loadSignupAgreements();
+  let errors = [];
+  if (!req.body.name) {
+    errors.push({ text: 'Please Enter Name' });
+  }
+  if (!req.body.email) {
+    errors.push({ text: 'Please Enter Email' });
+  }
+  if (!req.body.company) {
+    errors.push({ text: 'Please Enter Company' });
+  }
+  const existingUser = await databunker.users.get("email", req.body.email);
+  if (existingUser.data) {
+    errors.push({ text: 'Email Already Exists'} );
+  }
+  if (errors.length > 0) {
+    res.render('register', {
+      errors,
+      agreements,
+      name: req.body.name,
+      email: req.body.email,
+      company: req.body.company
+    });
+    return;
+  }
+  const user = {
+    name: req.body.name,
+    email: req.body.email,
+    company: req.body.company
+  };
+  const result = await databunker.users.create(user);
+  if (result.status == "ok") {
+    // save agreements
+    for (const idx in agreements) {
+      const r = agreements[idx];
+      if (req.body['agreement-'+r.brief] == "on") {
+        await databunker.agreements.accept("email", req.body.email, r.brief, {});
+      } else {
+        data = {status: "no"}
+        await databunker.agreements.accept("email", req.body.email, r.brief, data);
+      }
     }
-    if (!req.body.email) {
-        errors.push({ text: 'Please Enter Email' });
-    }
-    if (!req.body.company) {
-        errors.push({ text: 'Please Enter Company' });
-    }
-    const existingUser = await databunker.users.get("email", req.body.email);
-    if (existingUser.data) {
-        errors.push({ text: 'Email Already Exists'} );
-    }
-    if (errors.length > 0) {
-        res.render('register', {
-            errors: errors,
-            name: req.body.name,
-            email: req.body.email,
-            company: req.body.company
-        });
-	return;
-    }
-    const user = {
-        name: req.body.name,
-        email: req.body.email,
-        company: req.body.company
-    };
-    const result = await databunker.users.create(user);
-    if (result.status == "ok") {
-        res.redirect('/user/login');
-    } else {
-        errors.push({ text: result.message } );
-        res.render('register', {
-            errors: errors,
-            name: req.body.name,
-            email: req.body.email,
-            company: req.body.company
-        });
-    }
+    res.redirect('/user/login');
+  } else {
+    errors.push({ text: result.message } );
+    res.render('register', {
+      errors,
+      agreements,
+      name: req.body.name,
+      email: req.body.email,
+      company: req.body.company
+    });
+  }
 });
 
 router.get('/login', (req, res) => {

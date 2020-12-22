@@ -1,32 +1,44 @@
 <html>
-  <head>
-    <title>Registration page</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" href="/styles.css" />
-  </head>
-  <body>
-    <div id="app">
-    <h1>Registration page</h1>
- <% errors.forEach(function(err){ %>
-  <p style="color:red;"><%= err.text %></p>
-  <% }); %>
-            <form action="/user/register" method="post">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="form-control" required autofocus value="<%= name %>">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" class="form-control" required value="<%= email %>">
-                </div>
-                <div class="form-group">
-                    <label for="company">Company name</label>
-                    <input type="company" name="company" class="form-control" required value="<%= company %>">
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
-    <a href="/user/login">Login</a>
+ <head>
+  <title>Registration page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="/styles.css" />
+ </head>
+ <body>
+  <div id="app">
+   <h1>Registration page</h1>
+   <% errors.forEach(function(err){ %>
+   <p style="color: red;"><%= err.text %></p>
+   <% }); %>
+   <form action="/user/register" method="post">
+    <div class="form-group">
+     <label for="name">Name</label>
+     <input type="text" name="name" id="name" class="form-control" required autofocus value="<%= name %>" />
     </div>
-  </body>
+    <div class="form-group">
+     <label for="email">Email</label>
+     <input type="text" name="email" class="form-control" required value="<%= email %>" />
+    </div>
+    <div class="form-group">
+     <label for="company">Company name</label>
+     <input type="text" name="company" class="form-control" required value="<%= company %>" />
+    </div>
+    <% agreements.forEach(function(r){ %>
+     <div class="form-group">
+      <% if (r.requiredflag && r.requiredmsg) { %>
+        <input type="checkbox" name="agreement-<%= r.brief %>" required oninvalid="this.setCustomValidity('<%= r.requiredmsg %>')"
+  oninput="this.setCustomValidity('')" /><%= r.fulldesc %>
+      <% } else if (r.requiredflag) { %>
+        <input type="checkbox" name="agreement-<%= r.brief %>" required /><%= r.fulldesc %>
+      <% } else { %>
+        <input type="checkbox" name="agreement-<%= r.brief %>" /><%= r.fulldesc %>
+      <% } %>
+     </div>
+    <% }); %>
+    <button type="submit" class="btn btn-primary">Register</button>
+   </form>
+   <a href="/user/login">Login</a>
+  </div>
+ </body>
 </html>
