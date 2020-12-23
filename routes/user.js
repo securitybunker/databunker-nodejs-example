@@ -142,8 +142,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    //console.log("/login", req);
-    res.render("login", { title: "Magic Apple Store 🍎", MAGIC_PUBLISHABLE_KEY });
+  res.render("login", { title: "Magic Apple Store 🍎", MAGIC_PUBLISHABLE_KEY });
 });
 
 /* Attach middleware to login endpoint */

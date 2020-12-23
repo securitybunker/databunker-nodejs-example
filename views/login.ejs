@@ -14,7 +14,7 @@
           <h1>Please sign up or login</h1>
           <span style="color:red;">${err}</span>
           <form onsubmit="handleLogin(event)">
-            <input type="email" name="email" required="required" placeholder="Enter your email" />
+            <input type="text" name="email" required="required" placeholder="Enter your email" />
             <button type="submit">Send</button>
           </form>
           <a href="/user/register">Register</a>
@@ -26,7 +26,7 @@
         let html = `
           <h1>Please sign up or login</h1>
           <form onsubmit="handleLogin(event)">
-            <input type="email" name="email" required="required" placeholder="Enter your email" />
+            <input type="text" name="email" required="required" placeholder="Enter your email" />
             <button type="submit">Send</button>
           </form>
           <a href="/user/register">Register</a>
