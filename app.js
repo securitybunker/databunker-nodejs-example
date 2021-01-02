@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const morgan = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const { v4: uuidv4 } = require('uuid');
@@ -30,11 +30,25 @@ const s = session({
   store: new DataBunkerSessionStore(DataBunkerConf)
 });
 
+// Prepare a custom variable to be printed in the log line :sessionid
+morgan.token("sessionid", function(req, res) {
+  if (req.sessionID) {
+    return req.sessionID;
+  }
+});
+
+// Prepare a custom variable to be printed in the log line :usertoken
+morgan.token("usertoken", function(req, res) {
+  if (req.user && req.user.token){
+    return req.user.token;
+  }
+});
+
 const app = express();
 app.set("trust proxy", 1);
 app.set("view engine", "ejs");
 
-app.use(logger("dev"));
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" ":sessionid" ":usertoken"'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
