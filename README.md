@@ -1,4 +1,4 @@
-# hello-nodejs-passport-js-magic-link-databunker
+# databunker-nodejs-example
 
 This is an example of the nodejs login and signup page built with the following technologies:
 
