@@ -15,11 +15,10 @@ https://codesandbox.io/s/github/MagicLabs/example-nodejs
 ## 1. Start databunker:
 
 You can use the following command for development only:
+
 ```docker run -p 3000:3000 -d --rm --name dbunker securitybunker/databunker demo```
 
-For production follow the Databunker installation guide:
-
-https://databunker.org/doc/install/
+For production use, follow the Databunker installation guide: https://databunker.org/doc/install/
 
 
 ## 2. Set environment variables
