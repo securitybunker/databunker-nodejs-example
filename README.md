@@ -25,7 +25,7 @@ For production use, follow the Databunker installation guide: https://databunker
 
 Make sure that you have the following environment variables in place:
 ```
-export DATABUNKER_URL=https://localhost:3000/
+export DATABUNKER_URL=http://localhost:3000/
 export DATABUNKER_TOKEN=DEMO
 export MAGIC_PUBLISHABLE_KEY=pk_test_AAAA
 export MAGIC_SECRET_KEY=sk_test_BBBB
