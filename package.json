@@ -23,7 +23,7 @@
   "homepage": "https://github.com/securitybunker/hello-nodejs-passport-js-magic-link-databunker#readme",
   "dependencies": {
     "@databunker/session-store": "^1.0.4",
-    "@databunker/store": "^1.0.3",
+    "@databunker/store": "^1.0.5",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
