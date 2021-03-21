@@ -10,7 +10,7 @@ This is an example of the nodejs login and signup page built with the following 
 
 https://codesandbox.io/s/github/MagicLabs/example-nodejs
 
-An in-depth look at [Secure Session Storage](https://databunker.org/use-case/secure-session-storage/).
+An in-depth review pf the Databunker' [Secure Session Storage](https://databunker.org/use-case/secure-session-storage/).
 
 
 # Prerequisites
