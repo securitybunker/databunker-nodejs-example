@@ -6,16 +6,16 @@ This is an example of the nodejs login and signup page built with the following 
 * Magic.link https://magic.link/
 * Databunker https://databunker.org/
 
-**This project was originally based on the magic.link nodejs example:**
+**This project was originally based on Magic.Link Nodejs example:**
 
 https://codesandbox.io/s/github/MagicLabs/example-nodejs
 
-An in-depth review pf the Databunker' [Secure Session Storage](https://databunker.org/use-case/secure-session-storage/).
+An in-depth review of the Databunker' [Secure Session Storage](https://databunker.org/use-case/secure-session-storage/).
 
 
 # Prerequisites
 
-## 1. Start databunker:
+## 1. Start Databunker service:
 
 You can use the following command for development only:
 
