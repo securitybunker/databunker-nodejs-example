@@ -17,7 +17,7 @@ An in-depth review of the Databunker' [Secure Session Storage](https://databunke
 
 ## 1. Start Databunker service:
 
-You can use the following command to start **databunker** for the purpose of testing:
+For the purpose of testing you can use the following command to start **databunker**:
 
 ```docker run -p 3000:3000 -d --rm --name dbunker securitybunker/databunker demo```
 
