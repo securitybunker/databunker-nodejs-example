@@ -22,8 +22,8 @@
   },
   "homepage": "https://github.com/securitybunker/databunker-nodejs-example#readme",
   "dependencies": {
-    "@databunker/session-store": "^1.0.6",
-    "@databunker/store": "^1.0.7",
+    "@databunker/session-store": "^1.0.7",
+    "@databunker/store": "^1.0.8",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
