@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  databunker:
+    image: "securitybunker/databunker"
+    ports:
+      - "5000:5000"
+    volumes:
+      - data:/databunker/data
+
+
+volumes:
+  data:
